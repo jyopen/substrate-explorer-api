@@ -1,0 +1,33 @@
+{
+  "name": "ts-substrate-explorer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev main.ts",
+    "test": "ts-node-dev ./src/connect/redis.ts",
+    "start": "ts-node main.ts",
+    "import": "ts-node src/task/index.ts",
+    "initDB": "ts-node script/initDB.ts"
+  },
+  "dependencies": {
+    "@polkadot/api": "^1.5.1",
+    "@types/redis": "^2.8.16",
+    "dotenv": "^8.2.0",
+    "edgeware-node-types": "^1.2.0",
+    "koa": "^2.11.0",
+    "koa-body": "^4.1.1",
+    "koa-router": "^8.0.8",
+    "log4js": "^6.1.2",
+    "mysql2": "^2.1.0",
+    "redis": "^3.0.2",
+    "sequelize": "^5.21.5"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.11.2",
+    "@types/koa-router": "^7.4.0",
+    "@types/node": "^13.9.0",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.8.3"
+  }
+}
