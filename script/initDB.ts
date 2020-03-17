@@ -1,11 +1,12 @@
 import {sync} from "../src/database";
+import {logger} from "../src/utils";
 
 
 sync(true)
-    .then(() => console.log('数据库同步成功'))
+    .then(() => logger.info('数据库同步成功'))
     .then(() => {
     })
-    .catch((e) => console.log('数据库同步失败', e))
+    .catch((e) => logger.error('数据库同步失败', e))
     .finally(() => {
         process.exit(0)
     });

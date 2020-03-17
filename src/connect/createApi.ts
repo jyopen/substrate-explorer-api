@@ -1,6 +1,8 @@
 import {ApiPromise, WsProvider} from "@polkadot/api";
 import {RegistryTypes} from '@polkadot/types/types';
 import {seal, edgeware} from '../types';
+import {logger} from "../utils";
+
 require('dotenv').config();
 type Options = {
     url: string,
@@ -28,7 +30,7 @@ PROVIDER.set('dev', {
 });
 const NODE_NAME = process.env.NODE_NAME;
 if (!NODE_NAME || !PROVIDER.has(NODE_NAME)) {
-    console.error('节点信息不存在', NODE_NAME);
+    logger.error('节点信息不存在', NODE_NAME);
     process.exit(1)
 }
 const apiConfig = PROVIDER.get(NODE_NAME);
@@ -53,7 +55,7 @@ export async function createApi(): Promise<ApiPromise> {
         ]);
         const tokenSymbol = properties.tokenSymbol.unwrapOr('DEV').toString();
         const systemChain = _systemChain ? _systemChain.toString() : 'unknown';
-        console.log(
+        logger.info(
             'api: found chain',
             'Version:', _systemVersion.toString(),
             'Chain:', systemChain,
@@ -63,7 +65,7 @@ export async function createApi(): Promise<ApiPromise> {
         );
         return api;
     } catch (e) {
-        console.error('节点连接失败', apiConfig.url, e);
+        logger.error('节点连接失败', apiConfig.url, e);
         throw new Error(e)
     }
 }

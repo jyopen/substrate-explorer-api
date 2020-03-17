@@ -1,9 +1,11 @@
 import {createHash} from 'crypto'
-import logger from './logger'
+import {logger, httpLogger, httpLog} from './logger'
 
 
 export {
-    logger
+    logger,
+    httpLogger,
+    httpLog
 }
 
 /**

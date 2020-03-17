@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev main.ts",
+    "dev": "NODE_ENV=dev && ts-node-dev main.ts",
     "test": "ts-node-dev ./src/connect/redis.ts",
     "start": "ts-node main.ts",
     "import": "ts-node src/task/index.ts",

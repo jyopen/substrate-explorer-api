@@ -1,4 +1,4 @@
-import {sleep} from "../utils";
+import {logger, sleep} from "../utils";
 import {SingleData} from "./types";
 import {REDIS, sequelize} from "../connect";
 import {Block, Event, Log, Transaction} from "../database";
@@ -21,7 +21,7 @@ export async function saveSingleBlockData(blockNumber) {
     const blockData = <SingleData>(JSON.parse(await REDIS.GET(cacheKey)));
     if (!blockData) return sleep();
     const {block, events, transactions, logs} = blockData;
-    console.time('saveBlock:' + blockNumber);
+    const _time = Date.now();
     const transaction = await sequelize.transaction();
     try {
         await Promise.all([
@@ -35,8 +35,8 @@ export async function saveSingleBlockData(blockNumber) {
         await REDIS.DEL(cacheKey);
     } catch (e) {
         await transaction.rollback();
-        console.error('保存block失败', blockNumber, e);
+        logger.error('保存block失败', blockNumber, e);
         throw new Error(e)
     }
-    console.timeEnd('saveBlock:' + blockNumber);
+    logger.info('saveBlock:', blockNumber, Date.now() - _time);
 }

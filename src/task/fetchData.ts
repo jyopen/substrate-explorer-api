@@ -1,9 +1,8 @@
-
 import {mapperEvents, mapperLogs, mapperTransactions} from "../mapper/dataMapper";
 import {Block} from "../database";
 import {HeaderExtended} from "@polkadot/api-derive";
 import {EventRecord, SignedBlock} from "@polkadot/types/interfaces";
-import {sleep} from "../utils";
+import {logger, sleep} from "../utils";
 import {getApi, REDIS} from "../connect";
 import {REDIS_KEY} from "../constant";
 
@@ -46,9 +45,9 @@ async function batchFetchData(start, end) {
     for (let i = start; i <= end; i += 1) {
         array.push(i);
     }
-    console.time('batchFetchData:' + start + '-' + end);
+    const _time = Date.now();
     await Promise.all(array.map(number => fetchSingleBlockData(number)));
-    console.timeEnd('batchFetchData:' + start + '-' + end)
+    logger.info('batchFetchData:' + start + '-' + end, Date.now() - _time);
 }
 
 
@@ -57,7 +56,7 @@ export async function fetchSingleBlockData(blockNumber: number) {
     if (await REDIS.EXISTS(cacheKey)) {
         return;
     }
-    console.time('fetchBlock:' + blockNumber);
+    const _time = Date.now();
     try {
         const [hash, _header, _events, block] = await getBlockData(blockNumber);
         const header = block.block.header;
@@ -97,7 +96,7 @@ export async function fetchSingleBlockData(blockNumber: number) {
             await REDIS.SET_NUMBER(REDIS_KEY.MAX_BLOCK, blockNumber);
         }
     } catch (e) {
-        console.error('fetch block error:', blockNumber, e);
+        logger.error('fetch block error:', blockNumber, e);
     }
-    console.timeEnd('fetchBlock:' + blockNumber)
+    logger.info('fetchBlock:' + blockNumber, Date.now() - _time)
 }
