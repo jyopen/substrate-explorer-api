@@ -11,6 +11,7 @@ const FETCH_SIZE = 200;
 async function getBlockData(blockNumber: number): Promise<[string, HeaderExtended, EventRecord[], SignedBlock]> {
     const api = await getApi();
     const hash = await api.rpc.chain.getBlockHash(blockNumber);
+    // @ts-ignore
     return Promise.all([
         Promise.resolve(hash.toString()),
         api.derive.chain.getHeader(hash),
@@ -40,14 +41,14 @@ export async function fetchDataTask() {
     setTimeout(() => fetchDataTask(), 200)
 }
 
-async function batchFetchData(start, end) {
+async function batchFetchData(start: number, end: number) {
     const array = [];
     for (let i = start; i <= end; i += 1) {
         array.push(i);
     }
     const _time = Date.now();
     await Promise.all(array.map(number => fetchSingleBlockData(number)));
-    logger.info('batchFetchData:' + start + '-' + end, Date.now() - _time);
+    logger.info('batchFetchData:' + start + '-' + end, Date.now() - _time + 'ms');
 }
 
 
@@ -82,7 +83,7 @@ export async function fetchSingleBlockData(blockNumber: number) {
                 eventCount: events.length,
                 extrinsicCount: transactions.length,
                 inherentsCount: transactions.filter(t => !t.isSigned).length,
-                transactionCount: transactions.filter(t => t.isSigned).length,
+                transferCount: transactions.filter(t => t.isSigned).length,
                 timestamp,
                 size: block.block.encodedLength
             }),
@@ -98,5 +99,5 @@ export async function fetchSingleBlockData(blockNumber: number) {
     } catch (e) {
         logger.error('fetch block error:', blockNumber, e);
     }
-    logger.info('fetchBlock:' + blockNumber, Date.now() - _time)
+    logger.info('fetchBlock:' + blockNumber, Date.now() - _time + 'ms')
 }

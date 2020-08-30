@@ -16,19 +16,19 @@ export async function saveDataTask() {
     saveDataTask();
 }
 
-export async function saveSingleBlockData(blockNumber) {
+export async function saveSingleBlockData(blockNumber: number) {
     const cacheKey = `${REDIS_KEY.BLOCK_DATA}-${blockNumber}`;
-    const blockData = <SingleData>(JSON.parse(await REDIS.GET(cacheKey)));
+    const blockData = <SingleData>(JSON.parse(<string>await REDIS.GET(cacheKey)));
     if (!blockData) return sleep();
     const {block, events, transactions, logs} = blockData;
     const _time = Date.now();
     const transaction = await sequelize.transaction();
     try {
         await Promise.all([
-            Block.create(block, {transaction}).catch((e) => Promise.reject('Block:插入失败' + e)),
-            Promise.all(events.map(t => Event.create(t, {transaction}).catch((e) => Promise.reject('Event:插入失败' + e)))),
-            Promise.all(transactions.map(t => Transaction.create(t, {transaction}).catch((e) => Promise.reject('Extrinsic:插入失败' + e)))),
-            Promise.all(logs.map(t => Log.create(t, {transaction}).catch((e) => Promise.reject('Log:插入失败' + e)))),
+            Block.create(block, {transaction}).catch((e: Error) => Promise.reject('Block:插入失败' + e)),
+            Promise.all(events.map(t => Event.create(t, {transaction}).catch((e: Error) => Promise.reject('Event:插入失败' + e)))),
+            Promise.all(transactions.map(t => Transaction.create(t, {transaction}).catch((e: Error) => Promise.reject('Extrinsic:插入失败' + e)))),
+            Promise.all(logs.map(t => Log.create(t, {transaction}).catch((e: Error) => Promise.reject('Log:插入失败' + e)))),
             // createMetaData(metadata, blockNumber, transaction)
         ]);
         await transaction.commit();
@@ -38,5 +38,5 @@ export async function saveSingleBlockData(blockNumber) {
         logger.error('保存block失败', blockNumber, e);
         throw new Error(e)
     }
-    logger.info('saveBlock:', blockNumber, Date.now() - _time);
+    logger.info('saveBlock:', blockNumber, Date.now() - _time + 'ms');
 }

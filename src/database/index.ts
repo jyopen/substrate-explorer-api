@@ -9,19 +9,37 @@ import Validator from './entity/Validator'
 import Transfer from './entity/Transfer'
 import './hooks'
 
-function sync(force) {
-    return Promise.all([
-        Block.sync({force}),
-        Dictionary.sync({force}),
-        Event.sync({force}),
-        Transaction.sync({force}),
-        MetaData.sync({force}),
-        Log.sync({force}),
-        Account.sync({force}),
-        Transfer.sync({force}),
-        Validator.sync({force}),
-    ])
-}
+// Validator.hasMany(Block, {
+//     sourceKey: "accountId",
+//     foreignKey: "author",
+//     as: 'blocks'
+// });
+// Block.belongsTo(Validator, {foreignKey: 'author', as: 'validator'});
+//
+// Block.hasMany(Event, {sourceKey: "number", foreignKey: "blockNumber", as: 'events'});
+// Block.hasMany(Transaction, {
+//     sourceKey: "number",
+//     foreignKey: "blockNumber",
+//     as: 'transactions',
+//     foreignKeyConstraint: false
+// });
+// Block.hasMany(Log, {sourceKey: "number", foreignKey: "blockNumber", as: 'logs'});
+// Block.hasMany(Transfer, {sourceKey: "number", foreignKey: "blockNumber", as: 'transfers'});
+// Account.hasMany(Transaction, {sourceKey: "accountId", foreignKey: "signer"});
+// Account.hasMany(Transfer, {sourceKey: "accountId", foreignKey: "from", as: "Receipt"});
+// Account.hasMany(Transfer, {sourceKey: "accountId", foreignKey: "to", as: "Sender"});
+//
+// Transaction.belongsTo(Block, {foreignKey: 'blockNumber'});
+// Event.belongsTo(Block, {foreignKey: 'blockNumber'});
+// Log.belongsTo(Block, {foreignKey: 'blockNumber'});
+// Transaction.belongsTo(Account, {
+//     targetKey: "accountId",
+//     // foreignKey: {allowNull: true, name: "signer"},
+//     // foreignKeyConstraint: false
+// });
+// Transfer.belongsTo(Account, {targetKey: "accountId", foreignKey: "from", as: "Sender"});
+// Transfer.belongsTo(Account, {targetKey: "accountId", foreignKey: "to", as: "Receipt"});
+// Transfer.belongsTo(Block, {foreignKey: "blockNumber"});
 
 export {
     Block,
@@ -32,6 +50,5 @@ export {
     Transaction,
     Account,
     Validator,
-    Event,
-    sync
+    Event
 }

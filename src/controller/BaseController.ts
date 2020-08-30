@@ -1,10 +1,12 @@
 import {Context} from "koa";
+import {Model, ModelCtor} from "sequelize";
 
-class BaseController {
 
-    model;
+class BaseController<M extends Model> {
 
-    constructor({model}) {
+    protected model: ModelCtor<M>;
+
+    constructor({model}: { model: ModelCtor<M> }) {
         this.model = model
     }
 
@@ -16,11 +18,7 @@ class BaseController {
     }
 
     async list(ctx: Context) {
-        let newVar = await this.model.findAndCountAll(Object.assign({limit: 10}, ctx.request.body));
-        ctx.rest({
-            ...ctx.request.body,
-            ...newVar
-        })
+        ctx.rest(await this.model.findAndCountAll(Object.assign({limit: 10}, ctx.request.body)))
     }
 }
 

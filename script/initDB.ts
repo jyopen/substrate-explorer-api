@@ -1,12 +1,13 @@
-import {sync} from "../src/database";
+import {sequelize} from "../src/connect";
+import "../src/database"
 import {logger} from "../src/utils";
 
 
-sync(true)
+sequelize.sync({force: true})
     .then(() => logger.info('数据库同步成功'))
     .then(() => {
     })
-    .catch((e) => logger.error('数据库同步失败', e))
+    .catch((e: Error) => logger.error('数据库同步失败', e))
     .finally(() => {
         process.exit(0)
     });

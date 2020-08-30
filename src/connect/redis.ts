@@ -22,11 +22,11 @@ type Client = {
 }
 const REDIS: Client = {
     GET,
-    GET_NUMBER: (key) => GET(key).then(res => res ? parseInt(res) : 0),
+    GET_NUMBER: (key) => GET(key).then((res: any) => res ? parseInt(res) : 0),
     SET_NUMBER: (key, value) => SET(key, String(value)),
     SET,
     DEL,
-    EXISTS: (key: string) => EXISTS(key).then(res => res === 1)
+    EXISTS: (key: string) => EXISTS(key).then((res: any) => res === 1)
 }
 
 export default REDIS;

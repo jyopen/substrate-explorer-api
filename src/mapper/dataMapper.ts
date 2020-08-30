@@ -28,9 +28,12 @@ export function mapperEvents(list: EventRecord[], extrinsics: Vec<Extrinsic>, bl
             method,
             eventIndex: u8aToBn(index).toNumber(),
             indexes: i,
-            args: JSON.stringify(data.map((t, i) => ({...typeDef[i], value: t}))),
+            args: JSON.stringify(typeof data?.map !== 'function' ? [] : data?.map((t, i) => ({
+                ...typeDef[i],
+                value: t
+            }))),
             topics: JSON.stringify(event.topics),
-            relatedHash: extrinsicIndex > -1 && extrinsics[extrinsicIndex] ? extrinsics[extrinsicIndex].hash.toHex() : null
+            relatedHash: extrinsicIndex !== null && extrinsicIndex > -1 && extrinsics[extrinsicIndex] ? extrinsics[extrinsicIndex].hash.toHex() : null
         })
     })
 }

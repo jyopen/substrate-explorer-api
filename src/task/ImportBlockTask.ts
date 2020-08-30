@@ -12,7 +12,7 @@ async function exec() {
     saveDataTask()
 }
 
-async function insertSingleBlock(number) {
+async function insertSingleBlock(number: number) {
     await fetchSingleBlockData(number);
     saveSingleBlockData(number);
 }

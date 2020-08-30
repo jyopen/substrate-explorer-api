@@ -2,17 +2,17 @@ import {Model, DataTypes} from "sequelize";
 import {sequelize} from "../../connect";
 
 export default class Event extends Model {
-    public id: string;
-    public blockNumber: number;
-    public section: string;
-    public method: string;
-    public indexes: number;
-    public eventIndex: number;
-    public timestamp: number;
-    public extrinsicIndex: number | null;
-    public relatedHash: string | null;
-    public args: string;
-    public topics: string;
+    public id!: string;
+    public blockNumber!: number;
+    public section!: string;
+    public method!: string;
+    public indexes!: number;
+    public eventIndex!: number;
+    public timestamp!: number;
+    public extrinsicIndex!: number | null;
+    public relatedHash!: string | null;
+    public args!: string;
+    public topics!: string;
 }
 
 Event.init({
@@ -25,12 +25,10 @@ Event.init({
         allowNull: false
     },
     section: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
     },
     method: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
     },
     indexes: {
         type: DataTypes.INTEGER,
@@ -55,6 +53,6 @@ Event.init({
         allowNull: false
     },
     topics: {
-        type: new DataTypes.TEXT('medium')
+        type: new DataTypes.TEXT('long')
     },
 }, {sequelize, timestamps: false});

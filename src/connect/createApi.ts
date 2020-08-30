@@ -1,6 +1,6 @@
 import {ApiPromise, WsProvider} from "@polkadot/api";
 import {RegistryTypes} from '@polkadot/types/types';
-import {seal, edgeware} from '../types';
+import { edgeware} from '../types';
 import {logger} from "../utils";
 
 require('dotenv').config();
@@ -11,10 +11,6 @@ type Options = {
 
 const PROVIDER: Map<string, Options> = new Map<string, Options>();
 
-PROVIDER.set('seal', {
-    url: 'wss://dapp.sealchain.io:9443/',
-    types: seal
-});
 PROVIDER.set('kusama', {
     url: 'wss://kusama-rpc.polkadot.io/'
 });
@@ -33,7 +29,7 @@ if (!NODE_NAME || !PROVIDER.has(NODE_NAME)) {
     logger.error('节点信息不存在', NODE_NAME);
     process.exit(1)
 }
-const apiConfig = PROVIDER.get(NODE_NAME);
+const apiConfig = PROVIDER.get(NODE_NAME)!;
 
 
 export async function createApi(): Promise<ApiPromise> {

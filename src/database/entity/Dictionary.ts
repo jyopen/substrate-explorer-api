@@ -2,9 +2,9 @@ import {Model, DataTypes} from "sequelize";
 import {sequelize} from "../../connect";
 
 export default class Dictionary extends Model {
-    public key: string;
-    public value: string | null;
-    public describe: string;
+    public key!: string;
+    public value!: string | null;
+    public describe!: string;
 }
 
 Dictionary.init({

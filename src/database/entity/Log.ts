@@ -2,12 +2,12 @@ import {Model, DataTypes} from "sequelize";
 import {sequelize} from "../../connect";
 
 export default class Log extends Model {
-    public id: string;
-    public blockNumber: number;
-    public indexes: number;
-    public timestamp: number;
-    public type: string;
-    public args: string;
+    public id!: string;
+    public blockNumber!: number;
+    public indexes!: number;
+    public timestamp!: number;
+    public type!: string;
+    public args!: string;
 }
 
 Log.init({

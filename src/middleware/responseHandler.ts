@@ -1,8 +1,8 @@
 import {httpLog} from "../utils";
 import {Context} from "koa";
 
-export default async function responseHandler(ctx: Context, next) {
-    ctx.rest = function (data) {
+export default async function responseHandler(ctx: Context, next: () => Promise<void>) {
+    ctx.rest = function (data: any) {
         ctx.body = {
             code: 0,
             msg: 'success',

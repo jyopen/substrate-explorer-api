@@ -3,13 +3,16 @@
       "lib": [
          "es6"
       ],
+      "strict": true,
       "target": "es6",
       "module": "commonjs",
       "moduleResolution": "node",
-      "outDir": "./build",
+      "outDir": "./dist",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true,
-      "esModuleInterop": true
+      "declaration": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true
    }
 }

@@ -5,7 +5,7 @@ Event.beforeCreate(async (event, {transaction}) => {
     if (event.section === 'balances' && event.method === 'Transfer') {
         const args = JSON.parse(event.args);
         const {id, blockNumber, timestamp, relatedHash} = event;
-        return Transfer.create({
+        await Transfer.create({
             from: args[0].value,
             to: args[1].value,
             value: args[2].value,

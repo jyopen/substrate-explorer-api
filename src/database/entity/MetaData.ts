@@ -2,17 +2,17 @@ import {Model, DataTypes} from "sequelize";
 import {sequelize} from "../../connect";
 
 export default class MetaData extends Model {
-    public id: string;
-    public version: string;
-    public blockNumber: number;
-    public classify: string;
-    public index: number;
-    public section: string;
-    public type: string | null;
-    public value: string | null;
-    public name: string;
-    public args: string | null;
-    public documentation: string;
+    public id!: string;
+    public version!: string;
+    public blockNumber!: number;
+    public classify!: string;
+    public index!: number;
+    public section!: string;
+    public type!: string | null;
+    public value!: string | null;
+    public name!: string;
+    public args!: string | null;
+    public documentation!: string;
 }
 
 MetaData.init({

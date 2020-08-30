@@ -2,14 +2,14 @@ import {Model, DataTypes} from "sequelize";
 import {sequelize} from "../../connect";
 
 export default class Transfer extends Model {
-    public id: string;
-    public value: string;
-    public timestamp: number;
-    public blockNumber: number;
-    public fees: string;
-    public from: string;
-    public to: string;
-    public hash: string;
+    public id!: string;
+    public value!: string;
+    public timestamp!: number;
+    public blockNumber!: number;
+    public fees!: string;
+    public from!: string;
+    public to!: string;
+    public hash!: string;
 }
 
 Transfer.init({

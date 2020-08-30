@@ -2,19 +2,18 @@ import {Model, DataTypes} from "sequelize";
 import {sequelize} from "../../connect";
 
 export default class Block extends Model {
-    public number: number;
-    public logCount: number;
-    public extrinsicCount: number;
-    public transactionCount: number;
-    public size: number;
-    public eventCount: number;
-    public timestamp: number;
-    public parentHash: string | null;
-    public author: string | null;
-    public hash: string;
-    public stateRoot: string;
-    public extrinsicsRoot: string;
-
+    public number!: number;
+    public logCount!: number;
+    public extrinsicCount!: number;
+    public transferCount!: number;
+    public size!: number;
+    public eventCount!: number;
+    public timestamp!: number;
+    public parentHash!: string | null;
+    public author!: string | null;
+    public hash!: string;
+    public stateRoot!: string;
+    public extrinsicsRoot!: string;
 }
 
 Block.init({
@@ -30,7 +29,7 @@ Block.init({
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    transactionCount: {
+    transferCount: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
@@ -61,4 +60,4 @@ Block.init({
         type: new DataTypes.STRING(66),
         allowNull: false
     },
-}, {sequelize,timestamps:false});
+}, {sequelize, timestamps: false, comment: "区块数据"});

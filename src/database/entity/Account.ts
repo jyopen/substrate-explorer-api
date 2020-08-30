@@ -1,34 +1,34 @@
-import {Model, DataTypes} from "sequelize";
+import {Model, DataTypes, Transaction} from "sequelize";
 import {getApi, sequelize} from "../../connect";
 
 export default class Account extends Model {
-    public accountId: string;
-    public accountNonce: number;
-    public availableBalance: string;
-    public freeBalance: string;
-    public frozenFee: string;
-    public frozenMisc: string;
-    public isVesting: boolean;
-    public lockedBalance: string;
-    public reservedBalance: string;
-    public vestedBalance: string;
-    public vestingTotal: string;
-    public votingBalance: string;
-    public lockedBreakdown: string;
-    public accountIndex: string | null;
-    public identity: string;
-    public nickname: string | null;
+    public accountId!: string;
+    public accountNonce!: number;
+    public availableBalance!: string;
+    public freeBalance!: string;
+    public frozenFee!: string;
+    public frozenMisc!: string;
+    public isVesting!: boolean;
+    public lockedBalance!: string;
+    public reservedBalance!: string;
+    public vestedBalance!: string;
+    public vestingTotal!: string;
+    public votingBalance!: string;
+    public lockedBreakdown!: string;
+    public accountIndex!: string | null;
+    public identity!: string;
+    public nickname!: string | null;
 
-    static async upsertInfo(accountId) {
+    static async upsertInfo(accountId: string, transaction?: Transaction) {
         const api = await getApi();
         let [balancesAll, accountInfo] = await Promise.all([api.derive.balances.all(accountId), api.derive.accounts.info(accountId)]);
         balancesAll = JSON.parse(JSON.stringify(balancesAll));
         accountInfo = JSON.parse(JSON.stringify(accountInfo));
-        this.upsert({
+        return this.upsert({
             ...balancesAll, ...accountInfo,
             identity: JSON.stringify(accountInfo.identity),
             lockedBreakdown: JSON.stringify(balancesAll.lockedBreakdown)
-        })
+        }, {transaction})
     }
 
 }
@@ -99,4 +99,6 @@ export const accountAttributes = {
         defaultValue: {}
     },
 };
+
 Account.init(accountAttributes, {sequelize, timestamps: false});
+
