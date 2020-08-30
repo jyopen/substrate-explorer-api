@@ -6,9 +6,7 @@ import Application = require("koa");
 import {getApi} from "./connect";
 
 
-
 export default async function (app: Application, wsPort: number) {
-    const api = await getApi();
     const server = new ApolloServer({
         schema: generateSchema(Models, {
             pubSub: new PubSub(),
